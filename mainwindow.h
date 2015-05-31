@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMessageBox>
 
 namespace Ui {
 class MainWindow;
@@ -15,8 +16,18 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private slots:
+    void on_actionExit_triggered();
+
+    void on_addLocationToolButton_clicked();
+
+    void on_updateRecordsPushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
+
+// Prototypes
+void goofBox();
 
 #endif // MAINWINDOW_H
