@@ -1,8 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QFile>
+#include <QFileInfo>
 #include <QMainWindow>
 #include <QMessageBox>
+#include <QTextStream>
 
 namespace Ui {
 class MainWindow;
@@ -29,5 +32,10 @@ private:
 
 // Prototypes
 void goofBox();
+void loadLocales(Ui::MainWindow *z);
+
+// Constants
+const QString LOCALEFILEPATH = "data/config/locations";
+const QString CHANGELOGDBPATH = "data/sql/changeLog.db";
 
 #endif // MAINWINDOW_H
