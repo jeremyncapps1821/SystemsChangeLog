@@ -3,8 +3,11 @@
 
 #include <QFile>
 #include <QFileInfo>
+#include <QInputDialog>
 #include <QMainWindow>
 #include <QMessageBox>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 #include <QTextStream>
 
 namespace Ui {
@@ -33,6 +36,9 @@ private:
 // Prototypes
 void goofBox();
 void loadLocales(Ui::MainWindow *z);
+void buildDatabase();
+void openDatabase();
+void closeDatabase();
 
 // Constants
 const QString LOCALEFILEPATH = "data/config/locations";
