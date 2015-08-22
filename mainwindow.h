@@ -41,7 +41,7 @@ void openDatabase();
 void closeDatabase();
 
 // Constants
-const QString LOCALEFILEPATH = "data/config/locations";
-const QString CHANGELOGDBPATH = "data/sql/changeLog.db";
+const QString LOCALEFILEPATH = "./data/config/locations";
+const QString CHANGELOGDBPATH = "./data/sql/changeLog.db";
 
 #endif // MAINWINDOW_H

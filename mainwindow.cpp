@@ -1,4 +1,3 @@
-
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -8,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->dateEdit->setDate(QDate::currentDate());
+    QStringList args = qApp->arguments();
     loadLocales(ui);
     openDatabase();
 }
@@ -94,9 +94,10 @@ void MainWindow::on_updateRecordsPushButton_clicked()
     // Collect Data From Form and Add Record to DB
     QSqlQuery query;
     query.exec(QString("INSERT INTO changes VALUES(NULL,'%1',"
-                       "'%2','%3','%4')")
+                       "'%2','%3','%4','%5','%6')")
                .arg(ui->dateEdit->date().toString()).arg(ui->locationComboBox->currentText()).arg(ui->deviceIDLineEdit->text())
-               .arg(ui->notesTextEdit->toPlainText()));
+               .arg(ui->notesTextEdit->toPlainText()).arg(ui->timeInTimeEdit->time().toString("h:m:s ap"))
+               .arg(ui->timeOutTimeEdit->time().toString("h:m:s ap")));
 
     // Reset Form
     ui->deviceIDLineEdit->clear();
@@ -127,7 +128,9 @@ void buildDatabase()
                    "date text, "
                    "location text, "
                    "deviceID text, "
-                   "notes text)");
+                   "notes text, "
+                   "timeIn text, "
+                   "timeOut test)");
     }
 }
 
