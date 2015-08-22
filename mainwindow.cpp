@@ -96,8 +96,8 @@ void MainWindow::on_updateRecordsPushButton_clicked()
     query.exec(QString("INSERT INTO changes VALUES(NULL,'%1',"
                        "'%2','%3','%4','%5','%6')")
                .arg(ui->dateEdit->date().toString()).arg(ui->locationComboBox->currentText()).arg(ui->deviceIDLineEdit->text())
-               .arg(ui->notesTextEdit->toPlainText()).arg(ui->timeInTimeEdit->time().toString("h:m:s ap"))
-               .arg(ui->timeOutTimeEdit->time().toString("h:m:s ap")));
+               .arg(ui->notesTextEdit->toPlainText()).arg(ui->timeInTimeEdit->time().msecsSinceStartOfDay())
+               .arg(ui->timeOutTimeEdit->time().msecsSinceStartOfDay()));
 
     // Reset Form
     ui->deviceIDLineEdit->clear();
@@ -159,4 +159,47 @@ void closeDatabase()
     QSqlDatabase db;
     db = QSqlDatabase::database("QSQLITE");
     db.close();
+}
+
+void generateReport(int reportType)
+{
+    QSqlDatabase db;
+    db = QSqlDatabase::database("QSQLITE");
+
+    switch (reportType) {
+    case 0:
+        goofBox();
+        break;
+    case 1:
+        goofBox();
+        break;
+    case 2:
+        goofBox();
+        break;
+    case 3:
+        goofBox();
+        break;
+    default:
+        break;
+    }
+}
+
+void MainWindow::on_actionExport_All_Records_triggered()
+{
+    generateReport(0);
+}
+
+void MainWindow::on_actionBy_Device_ID_triggered()
+{
+    generateReport(1);
+}
+
+void MainWindow::on_actionDy_Date_triggered()
+{
+    generateReport(2);
+}
+
+void MainWindow::on_actionBy_Location_triggered()
+{
+    generateReport(3);
 }

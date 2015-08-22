@@ -137,7 +137,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>400</x>
@@ -159,7 +159,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>400</x>
@@ -195,6 +195,23 @@
     <property name="title">
      <string>File</string>
     </property>
+    <widget class="QMenu" name="menuReports">
+     <property name="title">
+      <string>Reports</string>
+     </property>
+     <widget class="QMenu" name="menuExport_Filters">
+      <property name="title">
+       <string>Export Filters</string>
+      </property>
+      <addaction name="actionBy_Device_ID"/>
+      <addaction name="actionDy_Date"/>
+      <addaction name="actionBy_Location"/>
+     </widget>
+     <addaction name="actionExport_All_Records"/>
+     <addaction name="menuExport_Filters"/>
+    </widget>
+    <addaction name="menuReports"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <addaction name="menuFile"/>
@@ -211,6 +228,26 @@
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionExport_All_Records">
+   <property name="text">
+    <string>Export All Records</string>
+   </property>
+  </action>
+  <action name="actionBy_Device_ID">
+   <property name="text">
+    <string>By Device ID</string>
+   </property>
+  </action>
+  <action name="actionDy_Date">
+   <property name="text">
+    <string>Dy Date</string>
+   </property>
+  </action>
+  <action name="actionBy_Location">
+   <property name="text">
+    <string>By Location</string>
    </property>
   </action>
  </widget>
