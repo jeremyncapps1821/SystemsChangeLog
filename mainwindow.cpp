@@ -96,7 +96,7 @@ void buildDatabase()
     db.setDatabaseName(CHANGELOGDBPATH);
     db.open();
 
-    // Build the table
+    // Build the tables
     if(db.isOpen())
     {
         QSqlQuery query;
