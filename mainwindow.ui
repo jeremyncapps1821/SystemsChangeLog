@@ -252,6 +252,16 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>dateEdit</tabstop>
+  <tabstop>locationComboBox</tabstop>
+  <tabstop>addLocationToolButton</tabstop>
+  <tabstop>deviceIDLineEdit</tabstop>
+  <tabstop>timeInTimeEdit</tabstop>
+  <tabstop>timeOutTimeEdit</tabstop>
+  <tabstop>notesTextEdit</tabstop>
+  <tabstop>updateRecordsPushButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
