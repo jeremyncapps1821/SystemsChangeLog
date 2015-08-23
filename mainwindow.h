@@ -52,5 +52,6 @@ void generateReport(int reportType);
 // Constants
 const QString LOCALEFILEPATH = "./data/config/locations";
 const QString CHANGELOGDBPATH = "./data/sql/changeLog.db";
+const QString EXPORTDIRECTORY = "./data/report.html";
 
 #endif // MAINWINDOW_H

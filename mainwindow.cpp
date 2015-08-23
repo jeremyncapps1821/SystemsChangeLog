@@ -130,7 +130,7 @@ void buildDatabase()
                    "deviceID text, "
                    "notes text, "
                    "timeIn text, "
-                   "timeOut test)");
+                   "timeOut text)");
     }
 }
 
@@ -163,24 +163,64 @@ void closeDatabase()
 
 void generateReport(int reportType)
 {
+    // Connect to database and Open our output file
     QSqlDatabase db;
     db = QSqlDatabase::database("QSQLITE");
+    QFile reportFile(EXPORTDIRECTORY);
 
-    switch (reportType) {
-    case 0:
-        goofBox();
-        break;
-    case 1:
-        goofBox();
-        break;
-    case 2:
-        goofBox();
-        break;
-    case 3:
-        goofBox();
-        break;
-    default:
-        break;
+    // Begin SQL Query Prep
+    QSqlQuery * query = new QSqlQuery(db);
+
+    // Generate report based on user's selection 'reportType'
+    if(reportFile.open(QIODevice::WriteOnly))
+    {
+        QTextStream stream( &reportFile );
+        stream << "<html>\n<head><title>Systems Change Log Report</title></head>\n<body>" << endl;
+
+        // Prepare Query
+        if(reportType == 0)
+        {
+            query->prepare("SELECT * FROM changes");
+        }
+        else if(reportType == 1)
+        {
+            bool ok;
+            QString devID = QInputDialog::getText(NULL, "Filter by ID",
+                                                  "Device ID:", QLineEdit::Normal,
+                                                  "42", &ok);
+
+            query->prepare("SELECT * FROM changes WHERE deviceID = '" + devID + "'");
+        }
+        else if(reportType == 2)
+        {
+            bool ok;
+            QString byDate = QInputDialog::getText(NULL, "Filter by Date",
+                                                   "Date:", QLineEdit::Normal,
+                                                   "12/12/55", &ok);
+        }
+        else if(reportType == 3)
+        {
+            bool ok;
+            QString locName = QInputDialog::getText(NULL, "Filter by Location",
+                                                    "Location Name:", QLineEdit::Normal,
+                                                    "Stavromuller Beta", &ok);
+
+            query->prepare("SELECT * FROM changes WHERE location = '" + locName + "'");
+        }
+
+        // Iterate through Query Results and write to html file
+        if(query->exec())
+        {
+            while(query->next())
+            {
+                stream << query->value(1).toString() + " " + query->value(2).toString() + " " + query->value(3).toString() + " " << endl;
+                stream << query->value(4).toString() + " " + query->value(5).toString() + " " + query->value(6).toString() + "</br>" << endl;
+            }
+        }
+
+        stream << "</body>\n</html>" << endl;
+
+        reportFile.close();
     }
 }
 
