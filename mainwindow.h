@@ -33,8 +33,6 @@ private slots:
 
     void on_actionBy_Device_ID_triggered();
 
-    void on_actionDy_Date_triggered();
-
     void on_actionBy_Location_triggered();
 
 private:

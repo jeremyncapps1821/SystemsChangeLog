@@ -8,46 +8,26 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->dateEdit->setDate(QDate::currentDate());
     QStringList args = qApp->arguments();
-    loadLocales(ui);
     openDatabase();
+    loadLocales(ui);
 }
 
 void loadLocales(Ui::MainWindow *z)
 {
-    // Check if locale file exists
-    QFileInfo checkLocaleFile(LOCALEFILEPATH);
-    if(!checkLocaleFile.exists())
-    {
-        // Yell if it doesn't exist
-        QMessageBox msgBox;
-        msgBox.setText("The locales file does not exist.\nA generic one will be created for you.");
-        msgBox.setIcon(QMessageBox::Warning);
-        msgBox.exec();
+    // Connect to db and prepare query
+    QSqlDatabase db;
+    db = QSqlDatabase::database("QSQLITE");
+    QSqlQuery query;
+    query.prepare("SELECT * FROM locales");
 
-        // Create a new generic locales file
-        QFile localeFile(LOCALEFILEPATH);
-        if(localeFile.open(QIODevice::WriteOnly))
-        {
-            QTextStream stream( &localeFile );
-            stream << "Stavromula Beta" << endl;
-        }
-        localeFile.close();
-    }
-    // If it does exist, load it
-    QFile localeFile(LOCALEFILEPATH);
-    if(localeFile.open(QIODevice::ReadOnly))
+    // Load locales from db
+    if(query.exec())
     {
-        QTextStream in(&localeFile);
-        while(!in.atEnd())
+        while(query.next())
         {
-            QString line = in.readLine();
-            if(line != "")
-            {
-                z->locationComboBox->addItem(line);
-            }
+            z->locationComboBox->addItem(query.value(1).toString());
         }
     }
-    localeFile.close();
 }
 
 MainWindow::~MainWindow()
@@ -70,17 +50,14 @@ void MainWindow::on_addLocationToolButton_clicked()
                                              "Location name:", QLineEdit::Normal,
                                              "Stavromula Beta", &ok);
 
-    // Add to combo box and locale file
+    // Add to combo box and locales table
     if(ok && !location.isEmpty())
     {
         ui->locationComboBox->addItem(location);
-        QFile localeFile(LOCALEFILEPATH);
-        if(localeFile.open(QIODevice::Append))
-        {
-            QTextStream stream( &localeFile );
-            stream << location << endl;
-            localeFile.close();
-        }
+        QSqlDatabase db;
+        db = QSqlDatabase::database("QSQLITE");
+        QSqlQuery query;
+        query.exec(QString("INSERT INTO locales VALUES(NULL, '%1')").arg(location));
     }
 
 }
@@ -131,6 +108,9 @@ void buildDatabase()
                    "notes text, "
                    "timeIn text, "
                    "timeOut text)");
+        query.exec("create table locales "
+                   "(id integer primary key, "
+                   "location text)");
     }
 }
 
@@ -194,13 +174,6 @@ void generateReport(int reportType)
         else if(reportType == 2)
         {
             bool ok;
-            QString byDate = QInputDialog::getText(NULL, "Filter by Date",
-                                                   "Date:", QLineEdit::Normal,
-                                                   "12/12/55", &ok);
-        }
-        else if(reportType == 3)
-        {
-            bool ok;
             QString locName = QInputDialog::getText(NULL, "Filter by Location",
                                                     "Location Name:", QLineEdit::Normal,
                                                     "Stavromuller Beta", &ok);
@@ -234,12 +207,7 @@ void MainWindow::on_actionBy_Device_ID_triggered()
     generateReport(1);
 }
 
-void MainWindow::on_actionDy_Date_triggered()
-{
-    generateReport(2);
-}
-
 void MainWindow::on_actionBy_Location_triggered()
 {
-    generateReport(3);
+    generateReport(2);
 }
