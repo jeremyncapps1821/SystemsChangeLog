@@ -155,7 +155,8 @@ void generateReport(int reportType)
     if(reportFile.open(QIODevice::WriteOnly))
     {
         QTextStream stream( &reportFile );
-        stream << "<html>\n<head><title>Systems Change Log Report</title></head>\n<body>" << endl;
+        stream << "<html>\n<head><title>Systems Change Log Report</title></head>\n<body>\n" << endl;
+        stream << "<table border='1' style='width:100%'>\n<tr>\n<th>Date</th><th>Locale</th><th>Device ID</th><th>Comments</th><th>Duration (hrs)</th></tr>\n" << endl;
 
         // Prepare Query
         if(reportType == 0)
@@ -186,12 +187,19 @@ void generateReport(int reportType)
         {
             while(query->next())
             {
-                stream << query->value(1).toString() + " " + query->value(2).toString() + " " + query->value(3).toString() + " " << endl;
-                stream << query->value(4).toString() + " " + query->value(5).toString() + " " + query->value(6).toString() + "</br>" << endl;
+                bool ok;
+                QString end = query->value(6).toString();
+                QString start = query->value(5).toString();
+                float endTime = (float) end.toInt(&ok,10);
+                float startTime = (float) start.toInt(&ok,10);
+                float duration = ((endTime - startTime) / 60000) / 60;
+                QString time = QString::number(duration, 'f', 2);
+                stream << "<tr><td>" + query->value(1).toString() + "</td><td>" + query->value(2).toString() + "</td><td>" + query->value(3).toString() + "</td><td>" << endl;
+                stream << query->value(4).toString() + "</td><td>" + time + "</td></tr>" << endl;
             }
         }
 
-        stream << "</body>\n</html>" << endl;
+        stream << "</table>\n</body>\n</html>" << endl;
 
         reportFile.close();
     }
