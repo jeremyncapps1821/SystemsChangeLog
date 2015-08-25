@@ -5,7 +5,7 @@ Just a generic program to keep track of all the changes on the networks I manage
 
 
 
-08-23-2015: v1.0.0 released
+08-24-2015: v1.1.0 released
             Fixed tab order in UI
             Moved locales into database
 

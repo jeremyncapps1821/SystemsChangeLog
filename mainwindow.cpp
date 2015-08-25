@@ -155,6 +155,7 @@ void generateReport(int reportType)
     if(reportFile.open(QIODevice::WriteOnly))
     {
         QTextStream stream( &reportFile );
+        // Setup web page
         stream << "<html>\n<head><title>Systems Change Log Report</title></head>\n<body>\n" << endl;
         stream << "<table border='1' style='width:100%'>\n<tr>\n<th>Date</th><th>Locale</th><th>Device ID</th><th>Comments</th><th>Duration (hrs)</th></tr>\n" << endl;
 
