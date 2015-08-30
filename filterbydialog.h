@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QFile>
+#include <QFileDialog>
 #include <QFileInfo>
 #include <QSqlDatabase>
 #include <QSqlQuery>
@@ -36,8 +37,5 @@ private:
 // Prototypes
 void generateReport(Ui::FilterByDialog *z);
 QString buildQuery(Ui::FilterByDialog *z);
-
-// Constants
-const QString EXPORTDIRECTORY = "./data/exports/report.html";
 
 #endif // FILTERBYDIALOG_H

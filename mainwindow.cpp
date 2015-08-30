@@ -146,3 +146,8 @@ void MainWindow::on_actionExport_Records_By_triggered()
     filterbydialog = new FilterByDialog;
     filterbydialog->show();
 }
+
+void MainWindow::on_actionBrowse_Logs_triggered()
+{
+
+}

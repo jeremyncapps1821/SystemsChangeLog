@@ -28,10 +28,23 @@ FilterByDialog::~FilterByDialog()
 
 void generateReport(Ui::FilterByDialog *z)
 {
+    // Have the user tell us where to save the report
+    QFileDialog dialog;
+    dialog.setFileMode(QFileDialog::Directory);
+    dialog.setWindowTitle("Where do you want to save your report?");
+    int res = dialog.exec();
+
+    QString savePath;
+
+    if(res)
+    {
+        savePath = dialog.selectedFiles()[0] + "/report.html";
+    }
+
     // Connect to database and Open our output file
     QSqlDatabase db;
     db = QSqlDatabase::database("QSQLITE");
-    QFile reportFile(EXPORTDIRECTORY);
+    QFile reportFile(savePath);
 
     // Begin SQL Query Prep
     QSqlQuery * query = new QSqlQuery(db);

@@ -31,6 +31,8 @@ private slots:
     void on_updateRecordsPushButton_clicked();
 
     void on_actionExport_Records_By_triggered();
+
+    void on_actionBrowse_Logs_triggered();
 };
 
 // Prototypes
