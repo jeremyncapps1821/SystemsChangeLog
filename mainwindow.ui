@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Systems Change Log</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QTextEdit" name="notesTextEdit">
@@ -202,15 +202,7 @@
      <property name="title">
       <string>Reports</string>
      </property>
-     <widget class="QMenu" name="menuExport_Filters">
-      <property name="title">
-       <string>Export Filters</string>
-      </property>
-      <addaction name="actionBy_Device_ID"/>
-      <addaction name="actionBy_Location"/>
-     </widget>
-     <addaction name="actionExport_All_Records"/>
-     <addaction name="menuExport_Filters"/>
+     <addaction name="actionExport_Records_By"/>
     </widget>
     <addaction name="menuReports"/>
     <addaction name="separator"/>
@@ -250,6 +242,11 @@
   <action name="actionBy_Location">
    <property name="text">
     <string>By Location</string>
+   </property>
+  </action>
+  <action name="actionExport_Records_By">
+   <property name="text">
+    <string>Export Records By...</string>
    </property>
   </action>
  </widget>

@@ -1,14 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QFile>
-#include <QFileInfo>
+#include "filterbydialog.h"
 #include <QInputDialog>
 #include <QMainWindow>
 #include <QMessageBox>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QTextStream>
 
 namespace Ui {
 class MainWindow;
@@ -20,7 +16,12 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+
     ~MainWindow();
+
+    FilterByDialog *filterbydialog;
+
+    Ui::MainWindow *ui;
 
 private slots:
     void on_actionExit_triggered();
@@ -29,14 +30,7 @@ private slots:
 
     void on_updateRecordsPushButton_clicked();
 
-    void on_actionExport_All_Records_triggered();
-
-    void on_actionBy_Device_ID_triggered();
-
-    void on_actionBy_Location_triggered();
-
-private:
-    Ui::MainWindow *ui;
+    void on_actionExport_Records_By_triggered();
 };
 
 // Prototypes
@@ -45,10 +39,8 @@ void loadLocales(Ui::MainWindow *z);
 void buildDatabase();
 void openDatabase();
 void closeDatabase();
-void generateReport(int reportType);
 
 // Constants
 const QString CHANGELOGDBPATH = "./data/sql/changeLog.db";
-const QString EXPORTDIRECTORY = "./data/exports/report.html";
 
 #endif // MAINWINDOW_H

@@ -141,82 +141,8 @@ void closeDatabase()
     db.close();
 }
 
-void generateReport(int reportType)
+void MainWindow::on_actionExport_Records_By_triggered()
 {
-    // Connect to database and Open our output file
-    QSqlDatabase db;
-    db = QSqlDatabase::database("QSQLITE");
-    QFile reportFile(EXPORTDIRECTORY);
-
-    // Begin SQL Query Prep
-    QSqlQuery * query = new QSqlQuery(db);
-
-    // Generate report based on user's selection 'reportType'
-    if(reportFile.open(QIODevice::WriteOnly))
-    {
-        QTextStream stream( &reportFile );
-        // Setup web page
-        stream << "<html>\n<head><title>Systems Change Log Report</title></head>\n<body>\n" << endl;
-        stream << "<table border='1' style='width:100%'>\n<tr>\n<th>Date</th><th>Locale</th><th>Device ID</th><th>Comments</th><th>Duration (hrs)</th></tr>\n" << endl;
-
-        // Prepare Query
-        if(reportType == 0)
-        {
-            query->prepare("SELECT * FROM changes");
-        }
-        else if(reportType == 1)
-        {
-            bool ok;
-            QString devID = QInputDialog::getText(NULL, "Filter by ID",
-                                                  "Device ID:", QLineEdit::Normal,
-                                                  "42", &ok);
-
-            query->prepare("SELECT * FROM changes WHERE deviceID = '" + devID + "'");
-        }
-        else if(reportType == 2)
-        {
-            bool ok;
-            QString locName = QInputDialog::getText(NULL, "Filter by Location",
-                                                    "Location Name:", QLineEdit::Normal,
-                                                    "Stavromuller Beta", &ok);
-
-            query->prepare("SELECT * FROM changes WHERE location = '" + locName + "'");
-        }
-
-        // Iterate through Query Results and write to html file
-        if(query->exec())
-        {
-            while(query->next())
-            {
-                bool ok;
-                QString end = query->value(6).toString();
-                QString start = query->value(5).toString();
-                float endTime = (float) end.toInt(&ok,10);
-                float startTime = (float) start.toInt(&ok,10);
-                float duration = ((endTime - startTime) / 60000) / 60;
-                QString time = QString::number(duration, 'f', 2);
-                stream << "<tr><td>" + query->value(1).toString() + "</td><td>" + query->value(2).toString() + "</td><td>" + query->value(3).toString() + "</td><td>" << endl;
-                stream << query->value(4).toString() + "</td><td>" + time + "</td></tr>" << endl;
-            }
-        }
-
-        stream << "</table>\n</body>\n</html>" << endl;
-
-        reportFile.close();
-    }
-}
-
-void MainWindow::on_actionExport_All_Records_triggered()
-{
-    generateReport(0);
-}
-
-void MainWindow::on_actionBy_Device_ID_triggered()
-{
-    generateReport(1);
-}
-
-void MainWindow::on_actionBy_Location_triggered()
-{
-    generateReport(2);
+    filterbydialog = new FilterByDialog;
+    filterbydialog->show();
 }
