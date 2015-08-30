@@ -1,3 +1,7 @@
+08-30-2015:
+            v1.1.1 released
+            Updated interface for generating reports
+
 08-24-2015:
             v1.1.0 released
             Fixed tab order in UI
