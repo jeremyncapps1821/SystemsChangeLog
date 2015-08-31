@@ -32,11 +32,10 @@ void generateReport(Ui::FilterByDialog *z)
     QFileDialog dialog;
     dialog.setFileMode(QFileDialog::Directory);
     dialog.setWindowTitle("Where do you want to save your report?");
-    int res = dialog.exec();
 
     QString savePath;
 
-    if(res)
+    if(dialog.exec())
     {
         savePath = dialog.selectedFiles()[0] + "/report.html";
     }

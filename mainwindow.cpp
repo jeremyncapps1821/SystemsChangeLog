@@ -149,5 +149,6 @@ void MainWindow::on_actionExport_Records_By_triggered()
 
 void MainWindow::on_actionBrowse_Logs_triggered()
 {
-
+    browselogsdialog = new BrowseLogsDialog;
+    browselogsdialog->show();
 }

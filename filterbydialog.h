@@ -1,13 +1,7 @@
 #ifndef FILTERBYDIALOG_H
 #define FILTERBYDIALOG_H
 
-#include <QDialog>
-#include <QFile>
-#include <QFileDialog>
-#include <QFileInfo>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QTextStream>
+#include "browselogsdialog.h"
 
 namespace Ui {
 class FilterByDialog;

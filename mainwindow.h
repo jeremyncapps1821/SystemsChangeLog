@@ -21,6 +21,8 @@ public:
 
     FilterByDialog *filterbydialog;
 
+    BrowseLogsDialog *browselogsdialog;
+
     Ui::MainWindow *ui;
 
 private slots:
