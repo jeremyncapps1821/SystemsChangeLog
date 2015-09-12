@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "eventlogviewer.h"
 #include "filterbydialog.h"
 #include <QInputDialog>
 #include <QMainWindow>
@@ -19,6 +20,8 @@ public:
 
     ~MainWindow();
 
+    eventLogViewer *eventlogviewer;
+
     FilterByDialog *filterbydialog;
 
     BrowseLogsDialog *browselogsdialog;
@@ -35,6 +38,7 @@ private slots:
     void on_actionExport_Records_By_triggered();
 
     void on_actionBrowse_Logs_triggered();
+    void on_actionWindows_Event_Logs_triggered();
 };
 
 // Prototypes

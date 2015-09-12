@@ -100,7 +100,7 @@ void buildDatabase()
     if(db.isOpen())
     {
         QSqlQuery query;
-        query.exec("create table changes "
+        query.exec("CREATE table changes "
                    "(id integer primary key, "
                    "date text, "
                    "location text, "
@@ -108,9 +108,17 @@ void buildDatabase()
                    "notes text, "
                    "timeIn text, "
                    "timeOut text)");
-        query.exec("create table locales "
+        query.exec("CREATE table locales "
                    "(id integer primary key, "
                    "location text)");
+        query.exec("CREATE table eventlogs "
+                   "(id integer primary key, "
+                   "date text, "
+                   "time text, "
+                   "hostname text, "
+                   "source text, "
+                   "eventid text, "
+                   "description text)");
     }
 }
 
@@ -151,4 +159,10 @@ void MainWindow::on_actionBrowse_Logs_triggered()
 {
     browselogsdialog = new BrowseLogsDialog;
     browselogsdialog->show();
+}
+
+void MainWindow::on_actionWindows_Event_Logs_triggered()
+{
+    eventlogviewer = new eventLogViewer;
+    eventlogviewer->show();
 }

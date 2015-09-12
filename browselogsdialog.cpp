@@ -33,22 +33,24 @@ void buildTable(Ui::BrowseLogsDialog *z)
     modal->setHeaderData(3, Qt::Horizontal, QObject::tr("Device ID"));
     modal->setHeaderData(4, Qt::Horizontal, QObject::tr("Notes"));
 
-    // Configure Table Appearance
-    z->browseLogsTableView->setModel(modal);
-    z->browseLogsTableView->verticalHeader()->setVisible(false);
-    z->browseLogsTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    z->browseLogsTableView->setColumnWidth(1, 135);
-    z->browseLogsTableView->setColumnWidth(2, 200);
-    z->browseLogsTableView->setColumnWidth(3, 80);
-    z->browseLogsTableView->hideColumn(0);
-    z->browseLogsTableView->hideColumn(5);
-    z->browseLogsTableView->hideColumn(6);
-    z->browseLogsTableView->horizontalHeader()->setStretchLastSection(true);
+    // Configure Tree View Appearance
+    z->treeView->setModel(modal);
+    z->treeView->setColumnWidth(1, 135);
+    z->treeView->setColumnWidth(2, 200);
+    z->treeView->setColumnWidth(3, 80);
+    z->treeView->hideColumn(0);
+    z->treeView->hideColumn(5);
+    z->treeView->hideColumn(6);
 }
 
-void BrowseLogsDialog::on_browseLogsTableView_activated(const QModelIndex &index)
+void BrowseLogsDialog::on_treeView_doubleClicked(const QModelIndex &index)
 {
-    int val = ui->browseLogsTableView->selectionModel()->currentIndex().row();
-    QString dbIndex = ui->browseLogsTableView->model()->data(ui->browseLogsTableView->model()->index(val, 0)).toString();
-    return;
+    QString id;
+
+    QModelIndex idx = ui->treeView->model()->index(index.row(), 0, index.parent());
+
+    if(idx.isValid())
+    {
+        id = idx.data(Qt::DisplayRole).toString();
+    }
 }

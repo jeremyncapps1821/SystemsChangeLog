@@ -23,7 +23,7 @@ public:
     ~BrowseLogsDialog();
 
 private slots:
-    void on_browseLogsTableView_activated(const QModelIndex &index);
+    void on_treeView_doubleClicked(const QModelIndex &index);
 
 private:
     Ui::BrowseLogsDialog *ui;

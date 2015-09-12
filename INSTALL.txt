@@ -1,7 +1,7 @@
 REPORTS
 
-You may use your own custom template to implement a custom look for your
+You may use your own custom html template to implement a custom look for your
 reports.  Just insert the comment "<!--TABLE-->" into your template where you
 would like the table containing the database query results.
 
-Custom templates for generating reports should be placed in ./data/config/
+Custom html templates for generating reports should be placed in ./data/config/
