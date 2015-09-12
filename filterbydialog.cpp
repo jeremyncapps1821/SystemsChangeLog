@@ -34,6 +34,7 @@ void generateReport(Ui::FilterByDialog *z)
     dialog.setWindowTitle("Where do you want to save your report?");
 
     QString savePath;
+    QString templatePath = "./data/config/report_template.conf";
 
     if(dialog.exec())
     {
@@ -44,16 +45,27 @@ void generateReport(Ui::FilterByDialog *z)
     QSqlDatabase db;
     db = QSqlDatabase::database("QSQLITE");
     QFile reportFile(savePath);
+    QFile templateFile(templatePath);
 
     // Begin SQL Query Prep
     QSqlQuery * query = new QSqlQuery(db);
 
     // Generate report
-    if(reportFile.open(QIODevice::WriteOnly))
+    if(reportFile.open(QIODevice::WriteOnly) && templateFile.open(QIODevice::ReadOnly))
     {
         QTextStream stream( &reportFile );
-        // Setup web page
-        stream << "<html>\n<head><title>Systems Change Log Report</title></head>\n<body>\n" << endl;
+        QTextStream instream(&templateFile);
+        QString line = instream.readLine();
+        QString tableBreak = "<!--TABLE-->";
+
+        // Use template to setup report.html
+        while(line != tableBreak)
+        {
+            stream << line;
+            line = instream.readLine();
+        }
+
+        // Table Setup
         stream << "<table border='1' style='width:100%'>\n<tr>\n<th>Date</th><th>Locale</th><th>Device ID</th><th>Comments</th><th>Duration (hrs)</th></tr>\n" << endl;
 
         // Prepare Query
@@ -76,9 +88,16 @@ void generateReport(Ui::FilterByDialog *z)
             }
         }
 
-        stream << "</table>\n</body>\n</html>" << endl;
+        stream << "</table>\n";
+
+        while(!instream.atEnd())
+        {
+            line = instream.readLine();
+            stream << line;
+        }
 
         reportFile.close();
+        templateFile.close();
     }
 }
 

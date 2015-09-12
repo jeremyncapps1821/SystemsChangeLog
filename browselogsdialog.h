@@ -22,6 +22,9 @@ public:
     explicit BrowseLogsDialog(QWidget *parent = 0);
     ~BrowseLogsDialog();
 
+private slots:
+    void on_browseLogsTableView_activated(const QModelIndex &index);
+
 private:
     Ui::BrowseLogsDialog *ui;
 };

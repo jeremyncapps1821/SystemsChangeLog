@@ -36,12 +36,19 @@ void buildTable(Ui::BrowseLogsDialog *z)
     // Configure Table Appearance
     z->browseLogsTableView->setModel(modal);
     z->browseLogsTableView->verticalHeader()->setVisible(false);
-    z->browseLogsTableView->hideColumn(0);
-    z->browseLogsTableView->hideColumn(5);
-    z->browseLogsTableView->hideColumn(6);
+    z->browseLogsTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     z->browseLogsTableView->setColumnWidth(1, 135);
     z->browseLogsTableView->setColumnWidth(2, 200);
     z->browseLogsTableView->setColumnWidth(3, 80);
+    z->browseLogsTableView->hideColumn(0);
+    z->browseLogsTableView->hideColumn(5);
+    z->browseLogsTableView->hideColumn(6);
     z->browseLogsTableView->horizontalHeader()->setStretchLastSection(true);
-    z->browseLogsTableView->resizeRowsToContents();
+}
+
+void BrowseLogsDialog::on_browseLogsTableView_activated(const QModelIndex &index)
+{
+    int val = ui->browseLogsTableView->selectionModel()->currentIndex().row();
+    QString dbIndex = ui->browseLogsTableView->model()->data(ui->browseLogsTableView->model()->index(val, 0)).toString();
+    return;
 }
