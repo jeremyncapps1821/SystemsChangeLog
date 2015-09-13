@@ -1,7 +1,7 @@
 #ifndef EVENTLOGVIEWER_H
 #define EVENTLOGVIEWER_H
 
-#include "browselogsdialog.h"
+#include "logdetailsdialog.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -14,7 +14,10 @@ class eventLogViewer : public QMainWindow
 
 public:
     explicit eventLogViewer(QWidget *parent = 0);
+
     ~eventLogViewer();
+
+    LogDetailsDialog *logdetailsdialog;
 
 private slots:
     void on_treeView_doubleClicked(const QModelIndex &index);

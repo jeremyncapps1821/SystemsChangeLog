@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Windows EventLog Viewer</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTreeView" name="treeView">

@@ -53,4 +53,8 @@ void BrowseLogsDialog::on_treeView_doubleClicked(const QModelIndex &index)
     {
         id = idx.data(Qt::DisplayRole).toString();
     }
+
+    logdetailsdialog = new LogDetailsDialog;
+    logdetailsdialog->receiveData(id, 0);
+    logdetailsdialog->show();
 }

@@ -157,4 +157,7 @@ void eventLogViewer::on_treeView_doubleClicked(const QModelIndex &index)
     }
 
     // Open a dialog with details of selected row
+    logdetailsdialog = new LogDetailsDialog;
+    logdetailsdialog->receiveData(id, 1);
+    logdetailsdialog->show();
 }

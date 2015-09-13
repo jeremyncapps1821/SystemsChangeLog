@@ -1,14 +1,7 @@
 #ifndef BROWSELOGSDIALOG_H
 #define BROWSELOGSDIALOG_H
 
-#include <QDialog>
-#include <QFile>
-#include <QFileDialog>
-#include <QFileInfo>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlQueryModel>
-#include <QTextStream>
+#include "eventlogviewer.h"
 
 namespace Ui {
 class BrowseLogsDialog;
@@ -20,7 +13,10 @@ class BrowseLogsDialog : public QDialog
 
 public:
     explicit BrowseLogsDialog(QWidget *parent = 0);
+
     ~BrowseLogsDialog();
+
+    LogDetailsDialog *logdetailsdialog;
 
 private slots:
     void on_treeView_doubleClicked(const QModelIndex &index);
