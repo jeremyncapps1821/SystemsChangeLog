@@ -58,3 +58,8 @@ void BrowseLogsDialog::on_treeView_doubleClicked(const QModelIndex &index)
     logdetailsdialog->receiveData(id, 0);
     logdetailsdialog->show();
 }
+
+void BrowseLogsDialog::on_pushButton_clicked()
+{
+    BrowseLogsDialog::accept();
+}

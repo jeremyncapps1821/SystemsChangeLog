@@ -13,9 +13,23 @@
   <property name="windowTitle">
    <string>Browse Change Logs</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
    <item>
-    <widget class="QTreeView" name="treeView"/>
+    <widget class="QTreeView" name="treeView">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string>Close</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
