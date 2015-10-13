@@ -46,7 +46,7 @@
       <x>21</x>
       <y>31</y>
       <width>161</width>
-      <height>29</height>
+      <height>32</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="dateFormLayout">
@@ -81,7 +81,7 @@
       <x>21</x>
       <y>148</y>
       <width>331</width>
-      <height>29</height>
+      <height>34</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="deviceIDFormLayout">
@@ -113,7 +113,7 @@
       <x>21</x>
       <y>89</y>
       <width>331</width>
-      <height>31</height>
+      <height>32</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="locationLayout">
@@ -151,8 +151,8 @@
      <rect>
       <x>400</x>
       <y>90</y>
-      <width>200</width>
-      <height>31</height>
+      <width>204</width>
+      <height>32</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="timeInFormLayout">
@@ -179,8 +179,8 @@
      <rect>
       <x>400</x>
       <y>150</y>
-      <width>224</width>
-      <height>29</height>
+      <width>227</width>
+      <height>32</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="timeOutFormLayout">
@@ -209,7 +209,7 @@
      <x>0</x>
      <y>0</y>
      <width>651</width>
-     <height>25</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

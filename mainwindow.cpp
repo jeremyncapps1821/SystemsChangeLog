@@ -166,3 +166,8 @@ void MainWindow::on_actionWindows_Event_Logs_triggered()
     eventlogviewer = new eventLogViewer;
     eventlogviewer->show();
 }
+
+void MainWindow::on_actionAbout_triggered()
+{
+    QMessageBox::information(this, "About", "Systems Change Log v1.2.1\nCopyright (c) 2015 Jeremy N Capps\nFor complete licensing information see the 'LICENSE' file contained in the root of the program folder.");
+}
