@@ -7,16 +7,25 @@ eventLogViewer::eventLogViewer(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // Setup our functions to handle the connection to server
+    connect(&tcpSocket, SIGNAL(connected()), this, SLOT(connectionInit()));
+
+    connect(&tcpSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(handleError(QAbstractSocket::SocketError)));
+
+    connect(&tcpSocket, SIGNAL(readyRead()), this, SLOT(dataArrived()));
+
     QFileDialog dialog;
     dialog.setFileMode(QFileDialog::AnyFile);
     dialog.setWindowTitle("Select the event log you wish to view...");
 
     QString logFile;
 
-    if(dialog.exec())
+    prepNetwork();
+
+    /*if(dialog.exec())
     {
         logFile = dialog.selectedFiles()[0];
-    }
+    }*/
 
     // Setup database table and import log file
     emptyEventLogs();
@@ -46,6 +55,7 @@ eventLogViewer::eventLogViewer(QWidget *parent) :
 
 eventLogViewer::~eventLogViewer()
 {
+    tcpSocket.close();
     delete ui;
 }
 
@@ -160,4 +170,49 @@ void eventLogViewer::on_treeView_doubleClicked(const QModelIndex &index)
     logdetailsdialog = new LogDetailsDialog;
     logdetailsdialog->receiveData(id, 1);
     logdetailsdialog->show();
+}
+
+void eventLogViewer::prepNetwork()
+{
+    // Connect to server
+    QHostAddress addr("127.0.0.1");
+
+    tcpSocket.connectToHost(addr, 65001);
+
+    // Send header to server to notify client type.
+    QString netHeader = "sawmill_viewer";
+    if(!tcpSocket.isOpen())
+    {
+        QMessageBox::critical(this, "No Server Connected", "Ya ain't connected to the server.");
+        return;
+    }
+    QByteArray Buffer;
+    Buffer.append(netHeader);
+
+    tcpSocket.write(Buffer);
+
+}
+
+void eventLogViewer::connectionInit()
+{
+    // QMessageBox::information(this, "Connected", "You're hooked up, dude!");
+}
+
+void eventLogViewer::handleError(QAbstractSocket::SocketError err)
+{
+    QMessageBox::critical(this, "Error!", tcpSocket.errorString());
+    tcpSocket.close();
+}
+
+void eventLogViewer::dataArrived()
+{
+    QByteArray Buffer;
+    Buffer = tcpSocket.readAll();
+    QMessageBox::information(this, "Data Received", "Data Received.");
+}
+
+void eventLogViewer::closeEvent(QCloseEvent *event)
+{
+    tcpSocket.close();
+    event->accept();
 }
