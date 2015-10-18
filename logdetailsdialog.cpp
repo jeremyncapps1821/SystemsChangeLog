@@ -75,6 +75,7 @@ void LogDetailsDialog::receiveData(QString id, int logType)
                 ui->sourceTextLabel->setVisible(1);
                 ui->timeLabel->setVisible(1);
                 ui->timeTextLabel->setVisible(1);
+                ui->timeTextLabel->setText(QString("%1").arg(query.value(2).toString()));
                 ui->dateTextLabel->setText(QString("%1").arg(query.value(1).toString()));
                 ui->locationLabel->setText("Hostname:");
                 ui->locationTextLabel->setText(QString("%1").arg(query.value(3).toString()));
