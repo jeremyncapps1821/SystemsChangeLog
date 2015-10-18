@@ -39,9 +39,13 @@ private:
 
     QTcpSocket tcpSocket;
 
+    QString incomingLog;
+
     void prepNetwork();
 
     void closeEvent(QCloseEvent *event);
+
+    void setupTable();
 };
 
 // Prototypes

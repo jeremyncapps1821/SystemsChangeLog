@@ -14,11 +14,12 @@ eventLogViewer::eventLogViewer(QWidget *parent) :
 
     connect(&tcpSocket, SIGNAL(readyRead()), this, SLOT(dataArrived()));
 
+
     QFileDialog dialog;
     dialog.setFileMode(QFileDialog::AnyFile);
     dialog.setWindowTitle("Select the event log you wish to view...");
 
-    QString logFile;
+    QString logFile = "data/new_logs";
 
     prepNetwork();
 
@@ -30,7 +31,12 @@ eventLogViewer::eventLogViewer(QWidget *parent) :
     // Setup database table and import log file
     emptyEventLogs();
     importEventLog(logFile);
+    setupTable();
 
+}
+
+void eventLogViewer::setupTable()
+{
     // Connect to database
     QSqlDatabase db;
     db = QSqlDatabase::database("QSQLITE");
@@ -208,7 +214,18 @@ void eventLogViewer::dataArrived()
 {
     QByteArray Buffer;
     Buffer = tcpSocket.readAll();
-    QMessageBox::information(this, "Data Received", "Data Received.");
+    incomingLog = QString(Buffer);
+    QFile file("data/new_logs");
+    if(file.open(QIODevice::Append))
+    {
+        QTextStream out(&file);
+        out << incomingLog;
+        // QMessageBox::information(this, "Data Received", "Data Received.");
+    }
+    file.close();
+    emptyEventLogs();
+    importEventLog("data/new_logs");
+    setupTable();
 }
 
 void eventLogViewer::closeEvent(QCloseEvent *event)
