@@ -25,31 +25,32 @@ public:
 
     LogDetailsDialog *logdetailsdialog;
 
+    void doConnect();
+
+    bool handleIncoming(QByteArray data);
+    void saveLog(QByteArray data);
+
+public slots:
+    void connected();
+    void disconnected();
+    void bytesWritten(qint64 bytes);
+    void readyRead();
+
 private slots:
     void on_treeView_doubleClicked(const QModelIndex &index);
-
-    void connectionInit();
-
-    void handleError(QAbstractSocket::SocketError err);
-
-    void dataArrived();
+    void on_clrLogsButton_clicked();
 
 private:
     Ui::eventLogViewer *ui;
-
-    QTcpSocket tcpSocket;
-
-    QString incomingLog;
-
-    void prepNetwork();
-
+    QTcpSocket *socket;
+    winEvent *event;
     void closeEvent(QCloseEvent *event);
-
     void setupTable();
+    void importEventLog(QString logPath, int logType);
 };
 
 // Prototypes
-void importEventLog(QString logPath);
+
 void emptyEventLogs();
 
 #endif // EVENTLOGVIEWER_H

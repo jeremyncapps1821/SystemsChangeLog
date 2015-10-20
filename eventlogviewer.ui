@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>683</width>
-    <height>473</height>
+    <height>555</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,6 +21,29 @@
       <y>20</y>
       <width>641</width>
       <height>391</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="clrLogsButton">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>430</y>
+      <width>131</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clear Logs</string>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="textBrowser">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>420</y>
+      <width>461</width>
+      <height>192</height>
      </rect>
     </property>
    </widget>

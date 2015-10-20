@@ -50,6 +50,6 @@ void openDatabase();
 void closeDatabase();
 
 // Constants
-const QString CHANGELOGDBPATH = "./data/sql/changeLog.db";
+const QString CHANGELOGDBPATH = "./data/sql/changelog.db";
 
 #endif // MAINWINDOW_H
