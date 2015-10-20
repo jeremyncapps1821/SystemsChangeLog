@@ -188,6 +188,12 @@ void MainWindow::on_actionWindows_Event_Logs_triggered()
     eventlogviewer->show();
 }
 
+void MainWindow::on_actionPreferences_triggered()
+{
+    prefsdialog = new PrefsDialog;
+    prefsdialog->show();
+}
+
 void MainWindow::on_actionAbout_triggered()
 {
     QMessageBox::information(this, "About", "Sawmill Viewer v2.0.0-alpha\nCopyright (c) 2015 Jeremy N Capps\nFor complete licensing information see the 'LICENSE' file contained in the root of the program folder.");

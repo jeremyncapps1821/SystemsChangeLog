@@ -25,6 +25,8 @@ public:
 
     BrowseLogsDialog *browselogsdialog;
 
+    PrefsDialog *prefsdialog;
+
     Ui::MainWindow *ui;
 
 private slots:
@@ -39,7 +41,10 @@ private slots:
     void on_actionBrowse_Logs_triggered();
 
     void on_actionWindows_Event_Logs_triggered();
+
     void on_actionAbout_triggered();
+
+    void on_actionPreferences_triggered();
 };
 
 // Prototypes

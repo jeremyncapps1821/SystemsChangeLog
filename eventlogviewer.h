@@ -2,6 +2,7 @@
 #define EVENTLOGVIEWER_H
 
 #include "logdetailsdialog.h"
+#include "prefsdialog.h"
 #include <QCloseEvent>
 #include <QMainWindow>
 #include <QMessageBox>
@@ -43,7 +44,6 @@ private slots:
 private:
     Ui::eventLogViewer *ui;
     QTcpSocket *socket;
-    winEvent *event;
     void closeEvent(QCloseEvent *event);
     void setupTable();
     void importEventLog(QString logPath, int logType);

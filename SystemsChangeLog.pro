@@ -17,19 +17,22 @@ SOURCES += main.cpp\
     filterbydialog.cpp \
     browselogsdialog.cpp \
     eventlogviewer.cpp \
-    logdetailsdialog.cpp
+    logdetailsdialog.cpp \
+    prefsdialog.cpp
 
 HEADERS  += mainwindow.h \
     filterbydialog.h \
     browselogsdialog.h \
     eventlogviewer.h \
-    logdetailsdialog.h
+    logdetailsdialog.h \
+    prefsdialog.h
 
 FORMS    += mainwindow.ui \
     filterbydialog.ui \
     browselogsdialog.ui \
     eventlogviewer.ui \
-    logdetailsdialog.ui
+    logdetailsdialog.ui \
+    prefsdialog.ui
 
 DISTFILES += \
     .gitignore \
