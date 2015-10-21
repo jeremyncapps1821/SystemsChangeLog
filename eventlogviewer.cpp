@@ -7,13 +7,33 @@ eventLogViewer::eventLogViewer(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    QSqlDatabase db;
+    db = QSqlDatabase::database("QSQLITE");
+    QSqlQuery query;
+    query.prepare(QString("SELECT * FROM preferences"));
+    if(query.exec())
+    {
+        while(query.next())
+        {
+            serverAddress = query.value(1).toString();
+            portNumber = query.value(2).toInt();
+            if(query.value(3).toString() == "Powershell")
+            {
+                logType = 1;
+            }
+            else
+            {
+                logType = 0;
+            }
+        }
+    }
     QString logFile = "data/new_logs";
 
     doConnect();
 
     // Setup database table and import log file
     // emptyEventLogs();
-    importEventLog(logFile,1);
+    importEventLog(logFile,logType);
     setupTable();
 
 }
@@ -30,7 +50,7 @@ void eventLogViewer::doConnect()
     ui->textBrowser->append("connecting...");
 
     // this is not blocking call
-    socket->connectToHost("localhost", 65001);
+    socket->connectToHost(serverAddress, portNumber);
 
     // we need to wait...
     if(!socket->waitForConnected(5000))
@@ -80,10 +100,15 @@ bool eventLogViewer::handleIncoming(QByteArray data)
         ui->textBrowser->append(data);
         return false;
     }
+    else if(data == "no_new_logs")
+    {
+        ui->textBrowser->append("No new logs on server.");
+        return true;
+    }
     else
     {
         saveLog(data);
-        importEventLog("data/new_logs", 1);
+        importEventLog("data/new_logs", logType);
         setupTable();
         return true;
     }
@@ -124,6 +149,7 @@ void eventLogViewer::setupTable()
     // Configure List Appearance
     ui->treeView->setModel(modal);
     ui->treeView->setColumnHidden(0,true);
+    ui->treeView->setColumnWidth(2, 225);
 }
 
 eventLogViewer::~eventLogViewer()
@@ -220,11 +246,12 @@ void eventLogViewer::importEventLog(QString logPath, int logType)
                     counter++;
                 }
 
+                QString datetime = date + " " + time;
                 // Insert into database
                 QSqlQuery query;
-                query.exec(QString("INSERT INTO eventlogs VALUES(NULL, '%1',"
-                                   "'%2','%3','%4','%5','%6')")
-                           .arg(date).arg(time).arg(hostName).arg(source).arg(eventId).arg(description));
+                query.exec(QString("INSERT INTO eventlogs(dateTime,machineName,providerName,eventId,message) VALUES('%1',"
+                                   "'%2','%3','%4','%5')")
+                           .arg(datetime).arg(hostName).arg(source).arg(eventId).arg(description));
             }
             else if(logType == 1)
             {
@@ -524,8 +551,15 @@ void eventLogViewer::importEventLog(QString logPath, int logType)
                 }
             }
         }
+    }
     logFile.close();
-    QFile::rename("data/new_logs", "data/old_logs");
+    if(logType == 1)
+    {
+        if(QFile::exists("data/old_logs"))
+        {
+            QFile::remove("data/old_logs");
+        }
+        QFile::rename("data/new_logs", "data/old_logs");
     }
 }
 
@@ -554,5 +588,38 @@ void eventLogViewer::closeEvent(QCloseEvent *event)
 void eventLogViewer::on_clrLogsButton_clicked()
 {
     emptyEventLogs();
+    setupTable();
+}
+
+void eventLogViewer::on_actionLoad_Logs_triggered()
+{
+    QFileDialog dialog;
+    dialog.setFileMode(QFileDialog::AnyFile);
+    dialog.setWindowTitle("Select the event log you wish to view...");
+
+    QString logFile;
+
+    if(dialog.exec())
+    {
+        logFile = dialog.selectedFiles()[0];
+    }
+
+    QStringList comboItems;
+    comboItems << "Powershell" << "Eventlog to Syslog";
+
+    bool ok;
+    QString style = QInputDialog::getItem(this, "What style log?", "Log Style",comboItems,0,false,&ok);
+    int logStyle;
+
+    if(style == "Powershell")
+    {
+        logStyle = 1;
+    }
+    else if(style == "Eventlog to Syslog")
+    {
+        logStyle = 0;
+    }
+
+    importEventLog(logFile, logStyle);
     setupTable();
 }

@@ -29,7 +29,7 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>31</x>
@@ -54,6 +54,9 @@
     </item>
     <item row="0" column="1">
      <widget class="QSpinBox" name="serverPortSpinBox">
+      <property name="specialValueText">
+       <string/>
+      </property>
       <property name="minimum">
        <number>1</number>
       </property>
@@ -61,13 +64,13 @@
        <number>65535</number>
       </property>
       <property name="value">
-       <number>65001</number>
+       <number>1</number>
       </property>
      </widget>
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>31</x>
@@ -102,7 +105,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>31</x>

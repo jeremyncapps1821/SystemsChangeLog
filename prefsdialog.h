@@ -2,6 +2,8 @@
 #define PREFSDIALOG_H
 
 #include <QDialog>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 
 namespace Ui {
 class PrefsDialog;
@@ -14,6 +16,10 @@ class PrefsDialog : public QDialog
 public:
     explicit PrefsDialog(QWidget *parent = 0);
     ~PrefsDialog();
+    void emptyPreferences();
+
+private slots:
+    void on_buttonBox_accepted();
 
 private:
     Ui::PrefsDialog *ui;

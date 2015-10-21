@@ -111,6 +111,11 @@ void buildDatabase()
         query.exec("CREATE table locales "
                    "(id integer primary key, "
                    "location text)");
+        query.exec("CREATE table preferences "
+                   "(id integer primary key, "
+                   "serverAddress text, "
+                   "serverPort text, "
+                   "logStyle text)");
         query.exec("CREATE table eventlogs "
                    "(id integer primary key, "
                    "message text, "

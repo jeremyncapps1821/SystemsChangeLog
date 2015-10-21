@@ -9,6 +9,7 @@
 #include <QTcpSocket>
 #include <QAbstractSocket>
 #include <QHostAddress>
+#include <QInputDialog>
 
 
 namespace Ui {
@@ -40,6 +41,7 @@ public slots:
 private slots:
     void on_treeView_doubleClicked(const QModelIndex &index);
     void on_clrLogsButton_clicked();
+    void on_actionLoad_Logs_triggered();
 
 private:
     Ui::eventLogViewer *ui;
@@ -47,6 +49,9 @@ private:
     void closeEvent(QCloseEvent *event);
     void setupTable();
     void importEventLog(QString logPath, int logType);
+    QString serverAddress;
+    int portNumber;
+    int logType;
 };
 
 // Prototypes
