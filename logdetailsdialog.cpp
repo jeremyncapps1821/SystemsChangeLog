@@ -69,20 +69,36 @@ void LogDetailsDialog::receiveData(QString id, int logType)
             }
             else if(logType == 1)
             {
+                QString time,date,temp;
+                temp = query.value(17).toString();
+                int len = temp.length();
+                int x = 0;
+                while(x < 10)
+                {
+                    date = date + temp[x];
+                    x++;
+                }
+                x++;
+                while(x < len)
+                {
+                    time = time + temp[x];
+                    x++;
+                }
+
                 ui->hrsWorkedLabel->setVisible(0);
                 ui->hrsWorkedTextLabel->setVisible(0);
                 ui->sourceLabel->setVisible(1);
                 ui->sourceTextLabel->setVisible(1);
                 ui->timeLabel->setVisible(1);
                 ui->timeTextLabel->setVisible(1);
-                ui->timeTextLabel->setText(QString("%1").arg(query.value(2).toString()));
-                ui->dateTextLabel->setText(QString("%1").arg(query.value(1).toString()));
+                ui->timeTextLabel->setText(QString(time));
+                ui->dateTextLabel->setText(QString(date));
                 ui->locationLabel->setText("Hostname:");
-                ui->locationTextLabel->setText(QString("%1").arg(query.value(3).toString()));
-                ui->deviceIdTextLabel->setText(QString("%1").arg(query.value(5).toString()));
+                ui->locationTextLabel->setText(QString("%1").arg(query.value(15).toString()));
+                ui->deviceIdTextLabel->setText(QString("%1").arg(query.value(2).toString()));
                 ui->deviceIdLabel->setText("Event ID:");
-                ui->sourceTextLabel->setText(QString("%1").arg(query.value(4).toString()));
-                ui->descripTextBrowser->setText(QString("%1").arg(query.value(6).toString()));
+                ui->sourceTextLabel->setText(QString("%1").arg(query.value(10).toString()));
+                ui->descripTextBrowser->setText(QString("%1").arg(query.value(1).toString()));
             }
         }
     }
