@@ -10,6 +10,7 @@
 #include <QAbstractSocket>
 #include <QHostAddress>
 #include <QInputDialog>
+#include <QSortFilterProxyModel>
 
 
 namespace Ui {
@@ -39,9 +40,9 @@ public slots:
     void readyRead();
 
 private slots:
-    void on_treeView_doubleClicked(const QModelIndex &index);
     void on_clrLogsButton_clicked();
     void on_actionLoad_Logs_triggered();
+    void on_tableView_doubleClicked(const QModelIndex &index);
 
 private:
     Ui::eventLogViewer *ui;
@@ -52,6 +53,7 @@ private:
     QString serverAddress;
     int portNumber;
     int logType;
+    QString buildQuery(int &warning, int &error, int &critical);
 };
 
 // Prototypes

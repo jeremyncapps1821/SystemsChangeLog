@@ -14,16 +14,6 @@
    <string>Windows EventLog Viewer</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTreeView" name="treeView">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>20</y>
-      <width>641</width>
-      <height>391</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="clrLogsButton">
     <property name="geometry">
      <rect>
@@ -48,6 +38,16 @@
     </property>
     <property name="readOnly">
      <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QTableView" name="tableView">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>661</width>
+      <height>401</height>
+     </rect>
     </property>
    </widget>
   </widget>

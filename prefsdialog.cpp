@@ -22,6 +22,10 @@ PrefsDialog::PrefsDialog(QWidget *parent) :
             int portNumber = query.value(2).toInt();
             ui->serverPortSpinBox->setValue(portNumber);
             ui->logStyleComboBox->setCurrentText(QString("%1").arg(query.value(3).toString()));
+            ui->warningCheckBox->setChecked(query.value(4).toInt());
+            ui->errorCheckBox->setChecked(query.value(5).toInt());
+            ui->criticalCheckBox->setChecked(query.value(6).toInt());
+            ui->eventsLineEdit->setText(query.value(7).toString());
         }
     }
 }
@@ -50,7 +54,9 @@ void PrefsDialog::on_buttonBox_accepted()
     db = QSqlDatabase::database("QSQLITE");
 
     QSqlQuery query;
-    query.exec(QString("INSERT INTO preferences VALUES(NULL,'%1','%2','%3')")
+    query.exec(QString("INSERT INTO preferences VALUES(NULL,'%1','%2','%3','%4','%5','%6','%7')")
                .arg(ui->serverAddressLineEdit->text()).arg(ui->serverPortSpinBox->value())
-               .arg(ui->logStyleComboBox->currentText()));
+               .arg(ui->logStyleComboBox->currentText()).arg(ui->warningCheckBox->isChecked())
+               .arg(ui->errorCheckBox->isChecked()).arg(ui->criticalCheckBox->isChecked())
+               .arg(ui->eventsLineEdit->text()));
 }

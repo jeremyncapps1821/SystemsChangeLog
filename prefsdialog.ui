@@ -29,109 +29,208 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
     <rect>
-     <x>31</x>
-     <y>72</y>
-     <width>173</width>
-     <height>32</height>
+     <x>10</x>
+     <y>10</y>
+     <width>641</width>
+     <height>351</height>
     </rect>
    </property>
-   <layout class="QFormLayout" name="serverPortFormLayout">
-    <item row="0" column="0">
-     <widget class="QLabel" name="serverPortLabel">
-      <property name="font">
-       <font>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Server Port:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QSpinBox" name="serverPortSpinBox">
-      <property name="specialValueText">
-       <string/>
-      </property>
-      <property name="minimum">
-       <number>1</number>
-      </property>
-      <property name="maximum">
-       <number>65535</number>
-      </property>
-      <property name="value">
-       <number>1</number>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>31</x>
-     <y>32</y>
-     <width>262</width>
-     <height>34</height>
-    </rect>
+   <property name="tabShape">
+    <enum>QTabWidget::Rounded</enum>
    </property>
-   <layout class="QFormLayout" name="serverAddressFormLayout">
-    <item row="0" column="0">
-     <widget class="QLabel" name="serverAddressLabel">
-      <property name="font">
-       <font>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Server Address:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLineEdit" name="serverAddressLineEdit">
-      <property name="text">
-       <string/>
-      </property>
-      <property name="placeholderText">
-       <string>10.9.8.42</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>31</x>
-     <y>110</y>
-     <width>261</width>
-     <height>30</height>
-    </rect>
+   <property name="currentIndex">
+    <number>0</number>
    </property>
-   <layout class="QFormLayout" name="logStyleFormLayout">
-    <item row="0" column="0">
-     <widget class="QLabel" name="logStyleLabel">
-      <property name="font">
-       <font>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Log Style:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QComboBox" name="logStyleComboBox"/>
-    </item>
-   </layout>
+   <widget class="QWidget" name="networkTab">
+    <attribute name="title">
+     <string>Network</string>
+    </attribute>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>281</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <layout class="QFormLayout" name="serverLayout">
+      <item row="0" column="0">
+       <layout class="QFormLayout" name="serverAddressFormLayout">
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="serverAddressLineEdit">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="placeholderText">
+           <string>10.9.8.42</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="serverAddressLabel">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Server Address:</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="0">
+       <layout class="QFormLayout" name="serverPortFormLayout">
+        <item row="0" column="1">
+         <widget class="QSpinBox" name="serverPortSpinBox">
+          <property name="specialValueText">
+           <string/>
+          </property>
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>65535</number>
+          </property>
+          <property name="value">
+           <number>1</number>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="serverPortLabel">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Server Port:</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="2" column="0" colspan="2">
+       <layout class="QFormLayout" name="logStyleFormLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="logStyleLabel">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Log Style:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="logStyleComboBox"/>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="filtersTab">
+    <attribute name="title">
+     <string>Log Filters</string>
+    </attribute>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>371</width>
+       <height>60</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="eventIdLayout">
+      <item>
+       <widget class="QLabel" name="eventsLabel">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+          <underline>true</underline>
+         </font>
+        </property>
+        <property name="text">
+         <string>Event IDs</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="eventsLineEdit">
+        <property name="toolTip">
+         <string>Input a comma seperated list of events to hide (eg 1492,42,27)</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>140</y>
+       <width>89</width>
+       <height>119</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="levelLayout">
+      <item alignment="Qt::AlignHCenter">
+       <widget class="QLabel" name="levelLabel">
+        <property name="font">
+         <font>
+          <pointsize>13</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+          <underline>true</underline>
+         </font>
+        </property>
+        <property name="text">
+         <string>Hide</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="checkBoxLayout">
+        <item>
+         <widget class="QCheckBox" name="warningCheckBox">
+          <property name="text">
+           <string>Warning</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="errorCheckBox">
+          <property name="text">
+           <string>Error</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="criticalCheckBox">
+          <property name="text">
+           <string>Critical</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <resources/>

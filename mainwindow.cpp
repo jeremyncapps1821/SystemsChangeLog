@@ -115,7 +115,11 @@ void buildDatabase()
                    "(id integer primary key, "
                    "serverAddress text, "
                    "serverPort text, "
-                   "logStyle text)");
+                   "logStyle text, "
+                   "warningChecked integer, "
+                   "errorChecked integer, "
+                   "criticalChecked integer, "
+                   "evtIdFilters text)");
         query.exec("CREATE table eventlogs "
                    "(id integer primary key, "
                    "message text, "

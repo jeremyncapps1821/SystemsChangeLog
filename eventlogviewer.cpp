@@ -134,10 +134,14 @@ void eventLogViewer::setupTable()
     QSqlDatabase db;
     db = QSqlDatabase::database("QSQLITE");
 
+    // Build Query
+    int wChecked, eChecked, cChecked;
+    QString queryText = buildQuery(wChecked, eChecked, cChecked);
+
     // Query database
     QSqlQueryModel * modal = new QSqlQueryModel();
     QSqlQuery * query = new QSqlQuery(db);
-    query->prepare("SELECT id,eventId,dateTime,machineName FROM eventlogs");
+    query->prepare(queryText);
     query->exec();
 
     // Configure model
@@ -146,10 +150,77 @@ void eventLogViewer::setupTable()
     modal->setHeaderData(2, Qt::Horizontal, QObject::tr("Date/Time"));
     modal->setHeaderData(3, Qt::Horizontal, QObject::tr("Source"));
 
+
     // Configure List Appearance
-    ui->treeView->setModel(modal);
-    ui->treeView->setColumnHidden(0,true);
-    ui->treeView->setColumnWidth(2, 225);
+    ui->tableView->setModel(modal);
+    ui->tableView->setColumnHidden(0,true);
+    ui->tableView->setColumnHidden(4,true);
+    ui->tableView->setColumnWidth(2, 225);
+    ui->tableView->verticalHeader()->hide();
+    ui->tableView->horizontalHeader()->setStretchLastSection(true);
+
+    if(wChecked == 1)
+    {
+        for(int x = 0; x < modal->rowCount(); x++)
+        {
+            QModelIndex index = ui->tableView->model()->index(x,4);
+            if(index.data().toInt() == 3)
+            {
+                ui->tableView->setRowHidden(x, true);
+            }
+        }
+    }
+
+    if(eChecked == 1)
+    {
+        for(int x = 0; x < modal->rowCount(); x++)
+        {
+            QModelIndex index = ui->tableView->model()->index(x,4);
+            if(index.data().toInt() == 2)
+            {
+                ui->tableView->setRowHidden(x, true);
+            }
+        }
+    }
+
+    if(cChecked == 1)
+    {
+        for(int x = 0; x < modal->rowCount(); x++)
+        {
+            QModelIndex index = ui->tableView->model()->index(x,4);
+            if(index.data().toInt() == 1)
+            {
+                ui->tableView->setRowHidden(x, true);
+            }
+        }
+    }
+
+}
+
+QString eventLogViewer::buildQuery(int &warning, int &error, int &critical)
+{
+    QString returnQuery;
+    QString events;
+
+    QSqlDatabase db;
+    db = QSqlDatabase::database("QSQLITE");
+
+    QSqlQuery * query = new QSqlQuery(db);
+    query->prepare("SELECT * FROM preferences");
+    if(query->exec())
+    {
+        while(query->next())
+        {
+            events = query->value(7).toString();
+            warning = query->value(4).toInt();
+            error = query->value(5).toInt();
+            critical = query->value(6).toInt();
+        }
+    }
+
+    returnQuery = QString("SELECT id,eventId,dateTime,machineName,level FROM eventlogs WHERE eventId NOT IN (%1)").arg(events);
+
+    return returnQuery;
 }
 
 eventLogViewer::~eventLogViewer()
@@ -563,22 +634,6 @@ void eventLogViewer::importEventLog(QString logPath, int logType)
     }
 }
 
-void eventLogViewer::on_treeView_doubleClicked(const QModelIndex &index)
-{
-    QString id;
-    QModelIndex idx = ui->treeView->model()->index(index.row(), 0, index.parent());
-
-    if(idx.isValid())
-    {
-        id = idx.data(Qt::DisplayRole).toString();
-    }
-
-    // Open a dialog with details of selected row
-    logdetailsdialog = new LogDetailsDialog;
-    logdetailsdialog->receiveData(id, 1);
-    logdetailsdialog->show();
-}
-
 void eventLogViewer::closeEvent(QCloseEvent *event)
 {
     socket->close();
@@ -622,4 +677,21 @@ void eventLogViewer::on_actionLoad_Logs_triggered()
 
     importEventLog(logFile, logStyle);
     setupTable();
+}
+
+void eventLogViewer::on_tableView_doubleClicked(const QModelIndex &index)
+{
+    QString id;
+    //QModelIndex idx = ui->treeView->model()->index(index.row(), 0, index.parent());
+    QModelIndex idx = ui->tableView->model()->index(index.row(), 0, index.parent());
+
+    if(idx.isValid())
+    {
+        id = idx.data(Qt::DisplayRole).toString();
+    }
+
+    // Open a dialog with details of selected row
+    logdetailsdialog = new LogDetailsDialog;
+    logdetailsdialog->receiveData(id, 1);
+    logdetailsdialog->show();
 }
