@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QStringList args = qApp->arguments();
     openDatabase();
     loadLocales(ui);
+    //loadDevices(ui);
 }
 
 void loadLocales(Ui::MainWindow *z)
@@ -26,6 +27,25 @@ void loadLocales(Ui::MainWindow *z)
         while(query.next())
         {
             z->locationComboBox->addItem(query.value(1).toString());
+        }
+    }
+}
+
+void loadDevices(Ui::MainWindow *z)
+{
+    // Connect to db and prepare query
+    QSqlDatabase db;
+    db = QSqlDatabase::database("QSQLITE");
+    QSqlQuery query;
+    QString queryText = QString("SELECT * FROM devices WHERE locale IS '%1'").arg(z->locationComboBox->currentText());
+    query.prepare(queryText);
+
+    // Load devices from db
+    if(query.exec())
+    {
+        while(query.next())
+        {
+            z->deviceComboBox->addItem(query.value(1).toString());
         }
     }
 }
@@ -62,6 +82,25 @@ void MainWindow::on_addLocationToolButton_clicked()
 
 }
 
+void MainWindow::on_addDeviceToolButton_clicked()
+{
+    // Get New Device ID
+    bool ok;
+    QString device = QInputDialog::getText(NULL, "New Device",
+                                           "Device ID:", QLineEdit::Normal,
+                                           "42", &ok);
+
+    // Add to combo box and devices table
+    if(ok && !device.isEmpty())
+    {
+        ui->deviceComboBox->addItem(device);
+        QSqlDatabase db;
+        db = QSqlDatabase::database("QSQLITE");
+        QSqlQuery query;
+        query.exec(QString("INSERT INTO devices VALUES(NULL, '%1', '%2', NULL, NULL, NULL)").arg(device).arg(ui->locationComboBox->currentText()));
+    }
+}
+
 void MainWindow::on_updateRecordsPushButton_clicked()
 {
     // Connect to Database
@@ -72,12 +111,11 @@ void MainWindow::on_updateRecordsPushButton_clicked()
     QSqlQuery query;
     query.exec(QString("INSERT INTO changes VALUES(NULL,'%1',"
                        "'%2','%3','%4','%5','%6')")
-               .arg(ui->dateEdit->date().toString()).arg(ui->locationComboBox->currentText()).arg(ui->deviceIDLineEdit->text())
+               .arg(ui->dateEdit->date().toString()).arg(ui->locationComboBox->currentText()).arg(ui->deviceComboBox->currentText())
                .arg(ui->notesTextEdit->toPlainText()).arg(ui->timeInTimeEdit->time().msecsSinceStartOfDay())
                .arg(ui->timeOutTimeEdit->time().msecsSinceStartOfDay()));
 
     // Reset Form
-    ui->deviceIDLineEdit->clear();
     ui->notesTextEdit->clear();
 }
 
@@ -119,6 +157,13 @@ void buildDatabase()
                    "source text, "
                    "eventid text, "
                    "description text)");
+        query.exec("CREATE table devices "
+                   "(id integer primary key, "
+                   "deviceID text, "
+                   "locale text, "
+                   "hostName text, "
+                   "ipAddr text, "
+                   "fqdn text)");
     }
 }
 
@@ -170,4 +215,10 @@ void MainWindow::on_actionWindows_Event_Logs_triggered()
 void MainWindow::on_actionAbout_triggered()
 {
     QMessageBox::information(this, "About", "Systems Change Log v1.2.1\nCopyright (c) 2015 Jeremy N Capps\nFor complete licensing information see the 'LICENSE' file contained in the root of the program folder.");
+}
+
+void MainWindow::on_locationComboBox_currentIndexChanged(const QString &arg1)
+{
+    ui->deviceComboBox->clear();
+    loadDevices(ui);
 }

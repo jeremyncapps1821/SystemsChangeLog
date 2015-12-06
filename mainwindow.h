@@ -40,11 +40,14 @@ private slots:
 
     void on_actionWindows_Event_Logs_triggered();
     void on_actionAbout_triggered();
+    void on_addDeviceToolButton_clicked();
+    void on_locationComboBox_currentIndexChanged(const QString &arg1);
 };
 
 // Prototypes
 void goofBox();
 void loadLocales(Ui::MainWindow *z);
+void loadDevices(Ui::MainWindow *z);
 void buildDatabase();
 void openDatabase();
 void closeDatabase();
